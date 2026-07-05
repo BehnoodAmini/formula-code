@@ -1,0 +1,39 @@
+.footer {
+  border-top: 1px solid var(--border-subtle);
+  background: var(--bg-secondary);
+}
+
+.inner {
+  width: min(var(--container), 100% - 2 * var(--space-4));
+  margin-inline: auto;
+  padding: var(--space-4) 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+}
+
+.flag {
+  width: 22px;
+  height: 14px;
+  opacity: 0.6;
+}
+
+.links {
+  margin-left: auto;
+  display: flex;
+  gap: var(--space-3);
+}
+
+.links a {
+  color: var(--text-secondary);
+  transition: color var(--dur-fast) ease;
+}
+
+.links a:hover {
+  color: var(--accent-primary-text);
+}

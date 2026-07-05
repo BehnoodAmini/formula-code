@@ -1,0 +1,304 @@
+/* ==========================================================================
+   FORMULA CODE — design tokens
+   Two themes, switched via <html data-theme="...">.
+
+   WCAG AA notes (contrast ratios computed against the theme backgrounds):
+   - race-night: #FF2800 on #0B0B0D = 5.2:1 (AA body ok on bg-primary), but
+     only 4.3:1 on #202024 raised surfaces -> small red text uses
+     --accent-primary-text (#FF5C3D, 5.2:1 on surface-raised, 6.4:1 on bg).
+   - pit-lane: #D9291C on #FAFAF8 = 4.7:1 (ok), 4.3:1 on #F0F0EE -> small red
+     text uses --accent-primary-text (#C02419, 5.2:1 on bg-secondary).
+     Gold #A6791F on #FAFAF8 = 3.7:1 (large text / UI only) -> small gold text
+     uses --accent-secondary-text (#8A6315, 5.2:1).
+   Raw accents remain for large display type, strokes, glows and 3D.
+   ========================================================================== */
+
+:root,
+[data-theme="race-night"] {
+  color-scheme: dark;
+
+  --bg-primary: #0b0b0d;
+  --bg-secondary: #17171a;
+  --surface-raised: #202024;
+  --accent-primary: #ff2800;
+  --accent-primary-text: #ff5c3d;
+  --accent-secondary: #d4af37;
+  --accent-secondary-text: #d4af37;
+  --text-primary: #f2f2f0;
+  --text-secondary: #a6a6aa;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --glow-accent: rgba(255, 40, 0, 0.35);
+  --glow-gold: rgba(212, 175, 55, 0.3);
+  --scrim: rgba(11, 11, 13, 0.72);
+  --ok: #4cc38a;
+
+  /* typography (families injected by next/font on <html>) */
+  --font-display: var(--font-titillium), "Segoe UI", system-ui, sans-serif;
+  --font-body: var(--font-inter), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), "Cascadia Mono", ui-monospace, monospace;
+
+  /* rhythm */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2.5rem;
+  --space-6: 4rem;
+  --space-7: 7rem;
+  --radius-1: 4px;
+  --radius-2: 10px;
+  --container: 1200px;
+  --header-h: 64px;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 160ms;
+  --dur-med: 320ms;
+}
+
+[data-theme="pit-lane"] {
+  color-scheme: light;
+
+  --bg-primary: #fafaf8;
+  --bg-secondary: #f0f0ee;
+  --surface-raised: #ffffff;
+  --accent-primary: #d9291c;
+  --accent-primary-text: #c02419;
+  --accent-secondary: #a6791f;
+  --accent-secondary-text: #8a6315;
+  --text-primary: #17171a;
+  --text-secondary: #55555a;
+  --border-subtle: rgba(0, 0, 0, 0.08);
+  --glow-accent: rgba(217, 41, 28, 0.18);
+  --glow-gold: rgba(166, 121, 31, 0.22);
+  --scrim: rgba(250, 250, 248, 0.78);
+  --ok: #157f4f;
+}
+
+/* ============================== base ==================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + 8px);
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+html[data-motion="reduce"] {
+  scroll-behavior: auto;
+}
+
+body {
+  margin: 0;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  transition: background-color 400ms ease, color 400ms ease;
+  overflow-x: hidden;
+}
+
+body[data-scroll-lock="true"] {
+  overflow: hidden;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  line-height: 1.08;
+  margin: 0;
+  text-wrap: balance;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+img,
+svg,
+canvas {
+  max-width: 100%;
+  display: block;
+}
+
+::selection {
+  background: var(--accent-primary);
+  color: #fff;
+}
+
+/* red/gold focus ring, everywhere */
+:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px var(--glow-gold);
+  border-radius: var(--radius-1);
+}
+
+/* ============================ utilities ================================= */
+
+.mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+.container {
+  width: min(var(--container), 100% - 2 * var(--space-4));
+  margin-inline: auto;
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skipLink {
+  position: fixed;
+  top: -100px;
+  left: var(--space-3);
+  z-index: 200;
+  padding: var(--space-2) var(--space-3);
+  background: var(--accent-primary);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 700;
+  border-radius: var(--radius-1);
+  transition: top var(--dur-fast) var(--ease-out);
+}
+
+.skipLink:focus-visible {
+  top: var(--space-3);
+}
+
+/* section header treatment shared by all sections */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  color: var(--accent-primary-text);
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.eyebrow::before {
+  content: "";
+  width: 28px;
+  height: 2px;
+  background: var(--accent-primary);
+  box-shadow: 0 0 8px var(--glow-accent);
+}
+
+.sectionTitle {
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  margin-top: var(--space-2);
+}
+
+/* schematic corner brackets, one element, 8 gradients */
+.corners {
+  --corner-color: var(--accent-secondary);
+  --corner-size: 14px;
+  background-image:
+    linear-gradient(var(--corner-color), var(--corner-color)),
+    linear-gradient(var(--corner-color), var(--corner-color)),
+    linear-gradient(var(--corner-color), var(--corner-color)),
+    linear-gradient(var(--corner-color), var(--corner-color)),
+    linear-gradient(var(--corner-color), var(--corner-color)),
+    linear-gradient(var(--corner-color), var(--corner-color)),
+    linear-gradient(var(--corner-color), var(--corner-color)),
+    linear-gradient(var(--corner-color), var(--corner-color));
+  background-repeat: no-repeat;
+  background-size:
+    var(--corner-size) 1.5px, 1.5px var(--corner-size),
+    var(--corner-size) 1.5px, 1.5px var(--corner-size),
+    var(--corner-size) 1.5px, 1.5px var(--corner-size),
+    var(--corner-size) 1.5px, 1.5px var(--corner-size);
+  background-position:
+    top left, top left,
+    top right, top right,
+    bottom left, bottom left,
+    bottom right, bottom right;
+}
+
+/* glow-pulse micro-interaction (hover/focus), used instead of flat color swaps */
+@keyframes glowPulse {
+  0% {
+    box-shadow: 0 0 0 0 var(--glow-accent);
+  }
+  70% {
+    box-shadow: 0 0 0 9px rgba(0, 0, 0, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+}
+
+.glowable {
+  transition: border-color var(--dur-fast) ease, color var(--dur-fast) ease,
+    background-color var(--dur-fast) ease;
+}
+
+.glowable:hover,
+.glowable:focus-visible {
+  animation: glowPulse 900ms var(--ease-out);
+  border-color: var(--accent-primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glowable:hover,
+  .glowable:focus-visible {
+    animation: none;
+    box-shadow: 0 0 0 2px var(--glow-accent);
+  }
+}
+html[data-motion="reduce"] .glowable:hover,
+html[data-motion="reduce"] .glowable:focus-visible {
+  animation: none;
+  box-shadow: 0 0 0 2px var(--glow-accent);
+}
+
+/* checkered pattern helper (signature motif + success states) */
+.checker {
+  background-image: repeating-conic-gradient(
+    var(--text-primary) 0% 25%,
+    transparent 0% 50%
+  );
+  background-size: 14px 14px;
+}

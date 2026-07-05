@@ -1,0 +1,169 @@
+.section {
+  /* 220vh runway: the extra 120vh is the scroll distance that drives the
+     camera orbit while the inner stage stays stuck */
+  height: 220vh;
+  position: relative;
+}
+
+.stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+}
+
+.canvasWrap {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.canvasWrap > * {
+  width: 100%;
+  height: 100%;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  width: min(var(--container), 100% - 2 * var(--space-4));
+  margin-inline: auto;
+  padding-bottom: 14vh;
+  pointer-events: none;
+}
+
+.content a,
+.content button {
+  pointer-events: auto;
+}
+
+.kicker {
+  composes: eyebrow from global;
+}
+
+.name {
+  font-size: clamp(2.6rem, 9vw, 6.2rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  line-height: 0.95;
+  margin-top: var(--space-3);
+}
+
+.name em {
+  font-style: normal;
+  color: var(--accent-primary);
+  text-shadow: 0 0 32px var(--glow-accent);
+}
+
+.role {
+  margin-top: var(--space-3);
+  max-width: 34rem;
+  color: var(--text-secondary);
+  font-size: clamp(1rem, 2vw, 1.15rem);
+}
+
+.statStrip {
+  margin-top: var(--space-5);
+  display: flex;
+  gap: var(--space-5);
+  flex-wrap: wrap;
+}
+
+.stat {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.stat dt {
+  font-size: 0.62rem;
+  letter-spacing: 0.24em;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.stat dd {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.stat dd i {
+  font-style: normal;
+  color: var(--accent-secondary-text);
+}
+
+.scrollCue {
+  position: absolute;
+  left: 50%;
+  bottom: 4vh;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.34em;
+  color: var(--text-secondary);
+  z-index: 2;
+}
+
+.scrollCue svg {
+  animation: cueBounce 1.6s ease-in-out infinite;
+}
+
+@keyframes cueBounce {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(7px);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrollCue svg {
+    animation: none;
+  }
+}
+html[data-motion="reduce"] .scrollCue svg {
+  animation: none;
+}
+
+/* ---- no-WebGL / low-end fallback: CSS-art garage ---------------------- */
+
+.fallbackScene {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(60% 45% at 62% 68%, var(--glow-accent), transparent 70%),
+    linear-gradient(180deg, transparent 55%, var(--bg-secondary) 100%);
+}
+
+.fallbackScene::after {
+  content: "";
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  bottom: 18%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-subtle) 30%, var(--border-subtle) 70%, transparent);
+}
+
+.fallbackCar {
+  position: absolute;
+  bottom: 18%;
+  left: 50%;
+  transform: translateX(-42%);
+  width: min(640px, 80vw);
+  height: auto;
+  opacity: 0.9;
+}

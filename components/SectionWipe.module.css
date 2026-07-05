@@ -1,0 +1,45 @@
+.wipe {
+  height: 120px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+.streak {
+  height: 10px;
+  width: 45%;
+  transform: translateX(-110%) skewX(-24deg);
+  will-change: transform;
+}
+
+.streak:nth-child(1) {
+  background: var(--accent-primary);
+  box-shadow: 0 0 18px var(--glow-accent);
+}
+
+.streak:nth-child(2) {
+  background: var(--accent-secondary);
+  width: 30%;
+  height: 6px;
+}
+
+.streak:nth-child(3) {
+  width: 22%;
+  height: 14px;
+  opacity: 0.55;
+  background-image: repeating-conic-gradient(
+    var(--text-primary) 0% 25%,
+    transparent 0% 50%
+  );
+  background-size: 14px 14px;
+}
+
+/* reduced motion: the motif becomes a static divider, same visual language */
+html[data-motion="reduce"] .streak,
+:global(html[data-motion="reduce"]) .streak {
+  transform: skewX(-24deg) !important;
+  margin-left: 10%;
+}

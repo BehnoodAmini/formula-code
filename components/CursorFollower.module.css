@@ -1,0 +1,54 @@
+.layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 180;
+}
+
+.ring,
+.dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 250ms ease;
+  will-change: transform;
+}
+
+.visible {
+  opacity: 1;
+}
+
+.ring {
+  width: 44px;
+  height: 44px;
+  color: var(--accent-primary);
+  transition: opacity 250ms ease, color 200ms ease;
+}
+
+.ring svg {
+  width: 100%;
+  height: 100%;
+  transition: transform 260ms var(--ease-out);
+}
+
+/* hovering an interactive element: gold, larger, ticks rotate to an X */
+.hot {
+  color: var(--accent-secondary);
+}
+
+.hot svg {
+  transform: scale(1.35) rotate(45deg);
+}
+
+.ring.press svg {
+  transform: scale(0.8);
+}
+
+.dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+  box-shadow: 0 0 8px var(--glow-accent);
+}

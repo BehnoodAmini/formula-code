@@ -1,0 +1,121 @@
+.section {
+  padding: var(--space-7) 0;
+  background: var(--bg-primary);
+}
+
+.inner {
+  composes: container from global;
+}
+
+.intro {
+  max-width: 46rem;
+  margin-top: var(--space-4);
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+}
+
+.grid {
+  margin-top: var(--space-6);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: var(--space-4);
+}
+
+.panel {
+  composes: corners from global;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-1);
+  padding: var(--space-4);
+}
+
+.panelHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.sector {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.26em;
+  color: var(--accent-primary-text);
+}
+
+.panelTitle {
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px 12px;
+  align-items: center;
+  padding: 7px 0;
+  border-bottom: 1px dashed var(--border-subtle);
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.skillName {
+  font-size: 0.88rem;
+  color: var(--text-primary);
+}
+
+.value {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 0.82rem;
+  color: var(--accent-secondary-text);
+}
+
+.bar {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 3px;
+  height: 7px;
+}
+
+.seg {
+  flex: 1;
+  background: var(--surface-raised);
+  border-radius: 1px;
+  transform-origin: left center;
+}
+
+.segOn {
+  background: var(--accent-primary);
+  box-shadow: 0 0 6px var(--glow-accent);
+}
+
+.segPeak {
+  background: var(--accent-secondary);
+  box-shadow: 0 0 6px var(--glow-gold);
+}
+
+.systems {
+  margin-top: var(--space-5);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--space-5);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-1);
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg-secondary);
+}
+
+.systems b {
+  color: var(--ok);
+  font-weight: 400;
+}

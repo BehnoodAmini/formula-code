@@ -1,0 +1,179 @@
+.header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: var(--header-h);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  background: color-mix(in srgb, var(--bg-primary) 72%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.inner {
+  width: min(var(--container), 100% - 2 * var(--space-4));
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.05rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.logo em {
+  font-style: normal;
+  color: var(--accent-primary-text);
+}
+
+.logoMark {
+  width: 26px;
+  height: 26px;
+  flex: none;
+}
+
+.nav {
+  display: flex;
+  gap: var(--space-3);
+  margin-left: auto;
+}
+
+.navLink {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  color: var(--text-secondary);
+  padding: 6px 4px;
+  position: relative;
+  transition: color var(--dur-fast) ease;
+}
+
+.navLink::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: 0;
+  height: 2px;
+  background: var(--accent-primary);
+  box-shadow: 0 0 8px var(--glow-accent);
+  transition: right var(--dur-med) var(--ease-out);
+}
+
+.navLink:hover,
+.navLink[aria-current="true"] {
+  color: var(--text-primary);
+}
+
+.navLink:hover::after,
+.navLink[aria-current="true"]::after {
+  right: 0;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-left: var(--space-2);
+}
+
+/* --- pit-wall switch ------------------------------------------------- */
+
+.switchGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.switchLabel {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.switch {
+  --knob: 18px;
+  position: relative;
+  width: 46px;
+  height: 24px;
+  border-radius: 4px;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25);
+  transition: border-color var(--dur-fast) ease;
+}
+
+.switch:hover {
+  border-color: var(--accent-primary);
+}
+
+.switch::before {
+  /* engraved guard stripes, pit-wall hardware feel */
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border-radius: 2px;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent 0 5px,
+    var(--border-subtle) 5px 7px
+  );
+  pointer-events: none;
+}
+
+.knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: var(--knob);
+  height: var(--knob);
+  border-radius: 3px;
+  background: linear-gradient(180deg, var(--surface-raised), var(--bg-secondary));
+  border: 1px solid var(--border-subtle);
+  display: grid;
+  place-items: center;
+  transition: transform var(--dur-med) var(--ease-out);
+}
+
+.switch[aria-checked="true"] .knob,
+.switch[aria-pressed="true"] .knob {
+  transform: translateX(22px);
+}
+
+.led {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+  box-shadow: 0 0 6px var(--glow-accent);
+  transition: background-color var(--dur-fast) ease, box-shadow var(--dur-fast) ease;
+}
+
+.switch[aria-checked="true"] .led,
+.switch[aria-pressed="true"] .led {
+  background: var(--accent-secondary);
+  box-shadow: 0 0 6px var(--glow-gold);
+}
+
+@media (max-width: 760px) {
+  .nav {
+    display: none;
+  }
+  .controls {
+    margin-left: auto;
+  }
+  .switchLabel {
+    display: none;
+  }
+}
