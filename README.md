@@ -10,6 +10,8 @@ npm run dev     # http://localhost:3000
 npm run build && npm start   # production
 ```
 
+Demo: [🏎️](https://formula-code.vercel.app/)
+
 Personal details (name, email, links) live in `lib/siteConfig.ts`.
 
 ## Stack
