@@ -11,8 +11,9 @@ interface Project {
   desc: string;
   stack: string[];
   stats: [string, string][];
-  art: "commerce" | "scale" | "waveform";
+  art: "commerce" | "scale" | "waveform" | "uplift";
   link?: string;
+  demo?: string;
   ndaNote?: string;
 }
 
@@ -28,6 +29,19 @@ const PROJECTS: Project[] = [
     ],
     art: "commerce",
     link: "https://github.com/BehnoodAmini/full-stack_E-Commerce-File-Shop",
+  },
+  {
+    name: "Causal Retention Uplift",
+    desc: "Measures whether a marketing e-mail actually causes customers to return — not just who will churn. A Python/EconML pipeline estimates per-customer treatment effects (CATE) on 64K customers from a real randomized experiment, distilled to ONNX and served by a static Next.js explorer with a segment breakdown and targeting-policy simulator.",
+    stack: ["Next.js 16", "Python", "EconML", "SHAP", "ONNX", "Recharts"],
+    stats: [
+      ["EFFECT", "+6.0pp lift"],
+      ["MODEL", "X-learner CATE"],
+      ["SAMPLE", "64K customers"],
+    ],
+    art: "uplift",
+    link: "https://github.com/BehnoodAmini/causal-retention-uplift",
+    demo: "https://causal-retention-uplift.vercel.app/",
   },
   {
     name: "Medu-Council",
@@ -105,6 +119,35 @@ function Art({ kind }: { kind: Project["art"] }) {
         <circle cx="160" cy="140" r="3" fill={gold} />
         <text x="30" y="24" fontSize="10" fill="var(--text-secondary)" fontFamily="var(--font-mono)">
           MONGODB CATALOG · JWT AUTH
+        </text>
+      </svg>
+    );
+  }
+  if (kind === "uplift") {
+    // Qini/uplift curve (targeting model vs. random baseline)
+    const qini = "M32 118 C 96 96, 168 66, 232 50 S 296 44, 296 44";
+    return (
+      <svg viewBox="0 0 320 160" aria-hidden="true">
+        {/* effect ruler: baseline → treated, with a confidence band */}
+        <line x1="32" y1="132" x2="296" y2="132" stroke={dim} strokeWidth="1" />
+        <rect x="196" y="124" width="40" height="16" rx="2" fill={gold} opacity="0.18" />
+        <circle cx="120" cy="132" r="4" fill="none" stroke={dim} strokeWidth="1.4" />
+        <circle cx="216" cy="132" r="4" fill={stroke} />
+        <line x1="124" y1="132" x2="208" y2="132" stroke={gold} strokeWidth="2" strokeDasharray="5 4" />
+        <polygon points="208,127 220,132 208,137" fill={gold} />
+        <text x="120" y="150" fontSize="8" fill="var(--text-secondary)" fontFamily="var(--font-mono)" textAnchor="middle">
+          10.6%
+        </text>
+        <text x="216" y="150" fontSize="8" fill={stroke} fontFamily="var(--font-mono)" textAnchor="middle">
+          +6.0pp
+        </text>
+        {/* targeting curve above the ruler */}
+        <line x1="32" y1="118" x2="296" y2="118" stroke={dim} strokeWidth="1" opacity="0.5" />
+        <line x1="32" y1="118" x2="296" y2="44" stroke={dim} strokeWidth="1" strokeDasharray="3 4" />
+        <path d={qini} fill="none" stroke={stroke} strokeWidth="2" />
+        <circle cx="296" cy="44" r="3" fill={gold} />
+        <text x="32" y="24" fontSize="10" fill="var(--text-secondary)" fontFamily="var(--font-mono)">
+          CATE UPLIFT · QINI-RANKED
         </text>
       </svg>
     );
@@ -207,7 +250,7 @@ export default function Projects() {
                   ))}
                 </dl>
                 <div className={styles.footer}>
-                  {p.link ? (
+                  {p.link && (
                     <a
                       href={p.link}
                       target="_blank"
@@ -217,9 +260,18 @@ export default function Projects() {
                       <GithubMark />
                       VIEW REPO ↗
                     </a>
-                  ) : (
-                    <span className={styles.nda}>{p.ndaNote}</span>
                   )}
+                  {p.demo && (
+                    <a
+                      href={p.demo}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={`${styles.linkBtn} glowable`}
+                    >
+                      LIVE DEMO ↗
+                    </a>
+                  )}
+                  {!p.link && p.ndaNote && <span className={styles.nda}>{p.ndaNote}</span>}
                 </div>
               </div>
             </article>

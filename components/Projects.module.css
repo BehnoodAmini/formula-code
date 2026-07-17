@@ -139,6 +139,10 @@
 
 .footer {
   margin-top: var(--space-4);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
 }
 
 .linkBtn {
